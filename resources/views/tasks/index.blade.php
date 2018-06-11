@@ -11,5 +11,10 @@
             @endforeach
         </ul>
     @endif
+    
+     {{ '<p style="color: red;">htmlentities 関数に通した場合</p>' }}
+    {!! '<p style="color: red;">htmlentities 関数に通さなかった場合</p>' !!}
+
+{!! link_to_route('tasks.create','新規投稿')!!}
 
 @endsection
