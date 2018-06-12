@@ -11,6 +11,15 @@
     
     {!! Form::label('content','タスク:')!!}
     {!! Form::text('content') !!}
+    
+    {!! Form::label('statust','ステータス:')!!}
+      {!! Form::select('status',[
+         'active' =>'active',
+         'idol'=>'idol',
+         'sleep'=>'sleep',
+         ])
+  !!}
+
 
     {!! Form::submit('投稿') !!}
 
