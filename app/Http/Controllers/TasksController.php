@@ -41,10 +41,12 @@ class TasksController extends Controller
     {
         $this->validate($request, [
             'content' => 'required|max:191',
+            'title' =>'required|max:191',
         ]);
         
         $task = new Task;
         $task->content = $request->content;
+        $task->title = $request->title;
         $task->save();
         
         return redirect('/');
@@ -89,12 +91,15 @@ class TasksController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request,[
-            'content' => 'required|max:191',]);
-        
+            'content' => 'required|max:191',
+            'title' => 'required|max:191',
+            ]
+            );
         
         
       $task = task::find($id);
         $task->content = $request->content;
+        $task->title = $request ->title;
         $task->save();
 
         return redirect('/');
