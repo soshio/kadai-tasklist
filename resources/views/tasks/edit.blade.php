@@ -1,26 +1,35 @@
 @extends('layouts.app')
 
 @section('content')
+
 <h1>id: {{ $task->id }} のタスク編集ページ</h1>
 
- {!! Form::model($task, ['route' => ['tasks.update', $task->id], 'method' => 'put']) !!}
+ <div class="row">
+    <div class="col-xs-6">
+         {!! Form::model($task, ['route' => ['tasks.update', $task->id], 'method' => 'put']) !!}
+            <div class="form-group">
+                {!! Form::label('title','タイトル')!!}
+                {!! Form::text('title',null,['class'=>'form-control']) !!}
+                </div>
+                <div class="form-group">
+                {!! Form::label('content', 'メッセージ:') !!}
+                {!! Form::text('content',null,['class'=>'form-control']) !!}
+                </div>
+                <div class="form-group">
+                 {!! Form::label('statust','ステータス:')!!}
+                 {!! Form::select('status',[
+                 'active' =>'active',
+                 'idol'=>'idol',
+                 'sleep'=>'sleep',
+                 ],null,['class'=>'form-control'])
+                 !!}
+                </div>
 
-        {!! Form::label('title','タイトル')!!}
-        {!! Form::text('title') !!}
-        
-        {!! Form::label('content', 'メッセージ:') !!}
-        {!! Form::text('content') !!}
-        
-         {!! Form::label('statust','ステータス:')!!}
-         {!! Form::select('status',[
-         'active' =>'active',
-         'idol'=>'idol',
-         'sleep'=>'sleep',
-         ])
-  !!}
+               {!! Form::submit('更新',['class'=>'btn btn-primary']) !!}
 
-        {!! Form::submit('更新') !!}
+        {!! Form::close() !!}
+    </div>
+</div>
 
-{!! Form::close() !!}
 
 @endsection
