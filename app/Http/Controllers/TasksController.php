@@ -14,7 +14,8 @@ class TasksController extends Controller
      */
     public function index()
     {
-        $tasks =  Task::all();
+        $user =  \Auth::user();
+        $tasks =  $user->tasks()->orderBy('created_at', 'desc')->paginate(10);
 
     return view('tasks.index',['tasks'=>$tasks]);
     }
@@ -87,11 +88,21 @@ class TasksController extends Controller
      */
     public function edit($id)
     {
-         $task = task::find($id);
+         $user_id =\Auth::user()->id;
+        
+        $task = Task::find($id);
+        $task_id = $task ->user_id;
 
-        return view('tasks.edit', [
+        if($user_id == $task_id){
+        $task = Task::find($id);
+
+      return view('tasks.edit', [
             'task' => $task,
         ]);
+        }
+        else{
+            return redirect('/');
+        }
 
     }
 
@@ -111,14 +122,24 @@ class TasksController extends Controller
             ]
             );
         
+       $user_id =\Auth::user()->id;
         
-      $task = task::find($id);
+        $task = Task::find($id);
+        $task_id = $task ->user_id;
+
+        if($user_id == $task_id){
+       $task = task::find($id);
         $task->content = $request->content;
         $task->title = $request ->title;
         $task->status = $request ->status;
         $task->save();
 
         return redirect('tasks');
+        }
+        else{
+            return redirect('/');
+        }  
+     
     }
 
     /**
@@ -129,10 +150,20 @@ class TasksController extends Controller
      */
     public function destroy($id)
     {
-       $task = Task::find($id);
+        $user_id =\Auth::user()->id;
+        $task = Task::find($id);
+        $task_id = $task ->user_id;
+
+        if($user_id == $task_id){
+         $task = Task::find($id);
 
         $task->delete();
 
         return redirect('tasks');
+        }
+        else{
+            return redirect('/');
+        }
+      
     }
 }
